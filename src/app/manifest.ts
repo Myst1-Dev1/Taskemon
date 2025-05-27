@@ -6,7 +6,10 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'Taskemon',
     description: 'Gerencie suas tarefas com diversão estilo Pokémon!',
     start_url: '/',
+    scope: '/',
+    id: '/?source=pwa',
     display: 'standalone',
+    orientation: 'portrait',
     background_color: '#FAF0C6',
     theme_color: '#E39191',
     icons: [

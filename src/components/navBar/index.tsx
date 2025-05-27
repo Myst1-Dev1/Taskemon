@@ -17,7 +17,7 @@ export function NavBar() {
                     <FaUserClock />
                     Histórico
                 </Link>
-                <div className="p-3 flex flex-col gap-3 justify-center items-center font-normal transition-all duration-500 hover:bg-red-500">
+                <div className="cursor-pointer p-3 flex flex-col gap-3 justify-center items-center font-normal transition-all duration-500 hover:bg-red-500">
                     <FaSignOutAlt />
                     Sair
                 </div>

@@ -8,7 +8,16 @@ const withPWAFunc = withPWA({
   skipWaiting: true,
 });
 
-const nextConfig = {
+const nextConfig:any = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
+        pathname: '/**',
+      },
+    ],
+  },
   reactStrictMode: true,
   experimental: {
     serverActions: true,

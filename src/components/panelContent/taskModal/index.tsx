@@ -14,7 +14,7 @@ export function TaskModal({ isOpenModal, setIsOpenModal, user }:TaskModalProps) 
     const [isPending, startTransition] = useTransition();
     const [message, setMessage] = useState("");
 
-    const handleCreate = (formData: FormData) => {
+    const handleCreateTask = (formData: FormData) => {
         formData.append("userId", user._id);
 
         startTransition(async () => {
@@ -34,7 +34,7 @@ export function TaskModal({ isOpenModal, setIsOpenModal, user }:TaskModalProps) 
             <Modal open={isOpenModal}>
                 <div className="px-4 flex flex-col gap-10">
                     <h2 className="text-center font-bold">Olá! Vamos criar as nossas tarefas para gerenciarmos nossos prêmios</h2>
-                    <form action={handleCreate} className="max-w-xl w-full flex flex-col gap-3">
+                    <form action={handleCreateTask} className="max-w-xl w-full flex flex-col gap-3">
                         <div className="flex flex-col gap-3">
                             <label htmlFor="title">Nome da tarefa</label>
                             <input type="text" name="title" id="title" className="border border-gray-300 rounded-lg w-full outline-none p-3" placeholder="Comprar pão" />

@@ -6,6 +6,8 @@ import { useState } from "react";
 import { FaCheck, FaTrashAlt } from "react-icons/fa";
 import { Tasks } from "@/@types/Tasks";
 import { TaskModal } from "./taskModal";
+import { deleteTask } from "@/actions/taskActions";
+import { useRouter } from "next/navigation";
 
 interface PanelContentProps {
     user:any;
@@ -13,6 +15,31 @@ interface PanelContentProps {
 
 export function PanelContent({ user }:PanelContentProps) {
     const [isOpenModal, setIsOpenModal] = useState(false);
+
+    const router = useRouter();
+
+    async function completeTask(userId:string, taskId:string) {
+      try {
+        const res = await fetch("http://localhost:4000/user/completeTask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId, taskId }),
+        });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+            alert(data.message || 'Erro desconhecido ao concluir a tarefa.');
+            return;
+        }
+      } catch (error) {
+        console.log('Tivemos um erro ao marcar a conclusão da tarefa!', error);
+      }
+
+      router.refresh();
+    }
 
     return (
         <>
@@ -40,10 +67,10 @@ export function PanelContent({ user }:PanelContentProps) {
                                 <h3 className="font-bold">{task.title}</h3>
                                 <p>{task.description}</p>
                                 <span className="bg-red-200 p-1 w-fit text-red-500 rounded-lg">{task.points} pontos</span>
-                                <div className="w-7 h-7 rounded-full grid place-content-center bg-green-500 text-white absolute top-2 right-2 cursor-pointer transition-all duration-500 hover:opacity-50">
+                                <div onClick={() => completeTask(user?._id, task._id)} className="w-7 h-7 rounded-full grid place-content-center bg-green-500 text-white absolute top-2 right-2 cursor-pointer transition-all duration-500 hover:opacity-50">
                                     <FaCheck />
                                 </div>
-                                <div className="w-7 h-7 grid place-content-center bg-red-200 text-red-500 rounded-md absolute bottom-2 right-2 cursor-pointer transition-all duration-500 hover:opacity-50">
+                                <div onClick={() => deleteTask(task._id)} className="w-7 h-7 grid place-content-center bg-red-200 text-red-500 rounded-md absolute bottom-2 right-2 cursor-pointer transition-all duration-500 hover:opacity-50">
                                     <FaTrashAlt />
                                 </div>
                             </div>

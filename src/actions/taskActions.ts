@@ -27,3 +27,20 @@ export async function createTaskAction(formData: FormData) {
 
   return await res.json();
 }
+
+export async function deleteTask(id:string) {
+  try {
+    await fetch("http://localhost:4000/tasks/deleteTask/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    console.log('Tarefa deletada com sucesso!');
+  } catch (error) {
+    console.log('Tivemos um erro ao deletar a tarefa!',error);
+  }
+
+  revalidatePath('/panel');
+}

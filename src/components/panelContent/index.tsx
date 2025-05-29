@@ -31,7 +31,7 @@ export function PanelContent({ user }:PanelContentProps) {
                     <Image
                     width={500}
                     height={500}
-                    src="/images/hidden-bg.jpg"
+                    src="/images/hidden-bg.gif"
                     alt="Fundo"
                     className="w-full h-full object-cover opacity-10"
                     />

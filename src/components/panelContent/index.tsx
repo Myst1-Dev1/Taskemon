@@ -37,10 +37,10 @@ export function PanelContent({ user }:PanelContentProps) {
                     />
                 </div>
 
-                <div className="z-10 py-16 px-4">
+                <div className="z-10 py-8 px-4">
                     <ProfileInfo user={user} />
                     <TasksData user={user} />
-                    <div className="mt-8 grid place-content-center">
+                    <div className="fixed bottom-24 left-1/2 -translate-x-1/2">
                         <button onClick={() => setIsOpenModal(true)} className="panelBtn cursor-pointer z-10 w-40 rounded-md cursor-pointeer p-3 bg-blue-400 text-white transition-all duration-500 hover:opacity-80">Criar tarefa</button>
                     </div>
                 </div>

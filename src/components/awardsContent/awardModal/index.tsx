@@ -29,7 +29,6 @@ export function AwardModal({ isOpenModal, setIsOpenModal, user }:AwardModalProps
                 formData.append("awardImg", res.url);
                 formData.append("userId", user._id);
                 await createAward(formData);
-                setMessage("Recompensa criada com sucesso!");
                 }
             } else {
                 throw new Error("Falha ao fazer upload da imagem.");
@@ -53,8 +52,8 @@ export function AwardModal({ isOpenModal, setIsOpenModal, user }:AwardModalProps
                             handleCreateAward(formData);
                         }} className="max-w-xl w-full flex flex-col gap-3">
                         <div className="flex flex-col gap-3">
-                            <div className="w-12 h-12 rounded-full aspect-square grid place-content-center border border-gray-300">
-                                <Image className="w-10 h-10 object-cover" src={file ? URL.createObjectURL(file) : "/images/joystick.png"} width={200} height={200} alt="imagem que representa o prêmio" />
+                            <div className="w-20 h-20 m-auto rounded-full aspect-square grid place-content-center border border-gray-300">
+                                <Image className="w-full rounded-full aspect-square object-cover" src={file ? URL.createObjectURL(file) : "/images/giftImg.jpg"} width={200} height={200} alt="imagem que representa o prêmio" />
                             </div>
                             <input type="file" name="premiumImg" className="hidden" id="file" onChange={(e) => setFile(e.target.files?.[0])} />
                             <label htmlFor="file" className="cursor-pointer text-blue-700">Envie uma imagem que define o prêmio</label>

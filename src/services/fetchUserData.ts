@@ -11,6 +11,8 @@ export async function fetchUserData() {
     const userData = JSON.parse(decodeURIComponent(userToken));
     const userId = userData._id;
 
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const res = await fetch(`http://localhost:4000/user/${userId}`, {
         method: "GET",
         headers: {

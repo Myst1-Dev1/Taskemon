@@ -19,8 +19,7 @@ export function TaskModal({ isOpenModal, setIsOpenModal, user }:TaskModalProps) 
 
         startTransition(async () => {
         try {
-            const newTask = await createTaskAction(formData);
-            setMessage(`Tarefa criada: ${newTask.title}`);
+            await createTaskAction(formData);
         } catch (err) {
             setMessage("Erro ao criar tarefa");
         } finally {

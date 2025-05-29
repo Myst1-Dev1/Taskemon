@@ -1,14 +1,17 @@
 import { Loading } from "@/components/loading";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import { setCookie } from "nookies";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 interface SignInProps {
-    setFormType:any;
-    setAvatar:any;
+    formType: string;
+    setFormType:Dispatch<SetStateAction<string>>;
+    setAvatar:Dispatch<SetStateAction<string>>;
 }
 
-export function SignIn({ setFormType, setAvatar }:SignInProps) {
+export function SignIn({ formType, setFormType, setAvatar }:SignInProps) {
     const [loading, setLoading] = useState(false);
 
     const router = useRouter();
@@ -37,7 +40,7 @@ export function SignIn({ setFormType, setAvatar }:SignInProps) {
             const userData = await response.json();
 
             setCookie(undefined, 'user-token', JSON.stringify(userData), {
-                maxAge: 30 * 24 * 60 * 60,
+                maxAge: 10 * 365 * 24 * 60 * 60, // 10 anos em segundos
                 path: "/",
             });
 
@@ -51,11 +54,18 @@ export function SignIn({ setFormType, setAvatar }:SignInProps) {
         }
     }
 
+    useGSAP(() => {
+        const tl = gsap.timeline({defaults: { ease:'sine', stagger:0.3, duration:0.4 }});
+
+        tl.fromTo('.signInInput', { opacity:0, y:-30 }, { opacity:1, y:0 });
+        tl.fromTo('.signInButton', { opacity:0, y:30 }, { opacity:1, y:0 });
+    }, [formType]);
+
     return (
         <>
             <form onSubmit={handleLoginWithUserName} className="-mt-5 max-w-64 w-full flex flex-col">
-                <input type="text" name="username" className="bg-white border-0 rounded-lg w-full outline-none p-3" placeholder="Nome de usuário" />
-                <button className="rounded-lg w-full p-3 text-white bg-blue-500 mt-5 cursor-pointer transition-all duration-500 hover:opacity-80">
+                <input type="text" name="username" className="signInInput bg-white border-0 rounded-lg w-full outline-none p-3" placeholder="Nome de usuário" />
+                <button className="signInButton rounded-lg w-full p-3 text-white bg-blue-500 mt-5 cursor-pointer transition-all duration-500 hover:opacity-80">
                     {loading ? <Loading /> : 'Começar'}
                 </button>
                 <p className="text-sm mt-3 text-center font-normal">Não possui uma conta? <span onClick={() => { setFormType('signUp'); setAvatar('/images/avatar-default.jpg') }} className="text-blue-500 cursor-pointer">Criar conta</span></p>

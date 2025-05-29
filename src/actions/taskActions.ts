@@ -8,7 +8,7 @@ export async function createTaskAction(formData: FormData) {
   const points = formData.get("points") as string;
   const userId = formData.get("userId") as string;
 
-  const res = await fetch("http://localhost:4000/tasks/createTask", {
+  const res = await fetch("https://lab.mystdev.com.br/taskemon/tasks/createTask", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export async function createTaskAction(formData: FormData) {
 
 export async function deleteTask(id:string) {
   try {
-    await fetch("http://localhost:4000/tasks/deleteTask/" + id, {
+    await fetch("https://lab.mystdev.com.br/taskemon/tasks/deleteTask/" + id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

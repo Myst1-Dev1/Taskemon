@@ -11,9 +11,9 @@ export async function fetchUserData() {
     const userData = JSON.parse(decodeURIComponent(userToken));
     const userId = userData._id;
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const res = await fetch(`http://localhost:4000/user/${userId}`, {
+    const res = await fetch(`https://lab.mystdev.com.br/taskemon/user/${userId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

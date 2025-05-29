@@ -3,6 +3,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 interface SignUpProps {
     avatar:string;
@@ -70,7 +71,7 @@ export function SignUp({ avatar, setAvatar, formType, setFormType }:SignUpProps)
 
             const { url } = await edgestore.myPublicImages.upload({ file });
 
-            await fetch('http://localhost:4000/user/createUser', {
+            await fetch('https://lab.mystdev.com.br/taskemon/user/createUser', {
                     method: 'POST',
                     headers: {
                     "Content-Type": "application/json",
@@ -81,7 +82,7 @@ export function SignUp({ avatar, setAvatar, formType, setFormType }:SignUpProps)
                 })
             });
 
-            alert('Usuário criado com sucesso!');
+            toast.success('Usuário criado com sucesso!');
         } catch (error) {
             console.error('Falha ao criar um novo usuário!', error);
             return;

@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import { setCookie } from "nookies";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { toast } from "react-toastify";
 
 interface SignInProps {
     formType: string;
@@ -25,15 +26,15 @@ export function SignIn({ formType, setFormType, setAvatar }:SignInProps) {
         const username = formData.get("username");
 
         if (!username || typeof username !== "string") {
-            alert("Por favor, insira um nome de usuário.");
+            toast.error("Por favor, insira um nome de usuário.");
             return;
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/user/findUser/${encodeURIComponent(username)}`);
+            const response = await fetch(`https://lab.mystdev.com.br/taskemon/user/findUser/${encodeURIComponent(username)}`);
 
             if (!response.ok) {
-            alert("Usuário não encontrado.");
+            toast.error("Usuário não encontrado.");
             return;
             }
 

@@ -12,6 +12,7 @@ import { HistoryEntry } from "@/@types/History";
 import { ProfileInfo } from "../profileInfo";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { toast } from "react-toastify";
 
 interface AwardsContentProps {
     user:any;
@@ -24,7 +25,7 @@ export function AwardsContent({ user }:AwardsContentProps) {
     
     async function redeemAward(userId:string, awardId:string) {
         try {
-        const res = await fetch("http://localhost:4000/user/redeemAward", {
+        const res = await fetch("https://lab.mystdev.com.br/taskemon/user/redeemAward", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -35,8 +36,10 @@ export function AwardsContent({ user }:AwardsContentProps) {
         const data = await res.json();
 
         if (!res.ok) {
-            alert(data.message || 'Erro desconhecido ao resgatar a recompensa.');
+            toast.error(data.message || 'Erro desconhecido ao resgatar a recompensa!');
             return;
+        } else {
+            toast.success('Recompensa resgatada com sucesso!');
         }
         } catch (error) {
         console.log('Tivemos um erro ao resgatar a recompensa!', error);
@@ -45,11 +48,22 @@ export function AwardsContent({ user }:AwardsContentProps) {
         router.refresh();
     }
 
+    async function handleDeleteAward(id:string) {
+        try {
+            await deleteAward(id);
+            toast.success('Recompensa deletada com sucesso!');
+        } catch (error) {
+            toast.error('Tivemos um erro ao deletar a recompensa!');
+        }
+    }
+
     useGSAP(() => {
-        const tl = gsap.timeline({defaults: { ease:'sine', stagger:0.4, delay:0.2, duration:0.8 }});
-        tl.fromTo('.award', { opacity:0, y:60 }, { opacity:1, y:0 });
-        tl.fromTo('.awardBtn', { opacity:0, scale:0, x:-40 }, { opacity:1, scale:1, x:0 });
+        gsap.fromTo('.awardBtn', { opacity:0, scale:0, x:-40 }, { opacity:1, scale:1, x:0, stagger:0.4, delay:0.2, duration:0.8 });
     }, []);
+
+    useGSAP(() => {
+        gsap.fromTo('.award', { opacity:0, y:60 }, { opacity:1, y:0, stagger:0.4, delay:0.2, duration:0.8 });
+    }, [user]);
     
     return (
         <>
@@ -104,7 +118,7 @@ export function AwardsContent({ user }:AwardsContentProps) {
                                         </div>
                                     </div>
                                     <div
-                                        onClick={() => deleteAward(award._id)}
+                                        onClick={() => handleDeleteAward(award._id)}
                                         className="w-7 h-7 grid place-content-center bg-red-200 text-red-500 rounded-md absolute top-2 right-2 cursor-pointer transition-all duration-500 hover:opacity-50"
                                     >
                                         <FaTrashAlt />

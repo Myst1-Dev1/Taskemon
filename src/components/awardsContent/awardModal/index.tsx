@@ -5,6 +5,7 @@ import { useEdgeStore } from "@/lib/edgestore";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState, useTransition } from "react";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface AwardModalProps {
     isOpenModal: boolean;
@@ -15,7 +16,6 @@ interface AwardModalProps {
 export function AwardModal({ isOpenModal, setIsOpenModal, user }:AwardModalProps) {
     const [file, setFile] = useState<File | null>();
     const [isPending, startTransition] = useTransition();
-    const [message, setMessage] = useState("");
 
     const { edgestore } = useEdgeStore();
 
@@ -26,15 +26,17 @@ export function AwardModal({ isOpenModal, setIsOpenModal, user }:AwardModalProps
                 const res = await edgestore.myPublicImages.upload({ file });
 
                 if (res.url) {
-                formData.append("awardImg", res.url);
-                formData.append("userId", user._id);
-                await createAward(formData);
+                    formData.append("awardImg", res.url);
+                    formData.append("userId", user._id);
+                    await createAward(formData);
                 }
+
+                toast.success('Recompensa criada com sucesso!');
             } else {
-                throw new Error("Falha ao fazer upload da imagem.");
+                toast.error('Falha ao fazer upload da imagem!')
             }
             } catch (error) {
-            setMessage("Erro ao criar a recompensa!");
+            toast.error("Erro ao criar a recompensa!");
             } finally {
             setIsOpenModal(false);
             }
@@ -69,7 +71,6 @@ export function AwardModal({ isOpenModal, setIsOpenModal, user }:AwardModalProps
                         <button className="cursor-pointer bg-blue-500 text-white rounded-md w-full p-3 mt-5 transition-all duration-500 hover:brightness-90">
                             {isPending ? <Loading /> : 'Enviar'}
                         </button>
-                        {message && <p>{message}</p>}
                     </form>
                     <span onClick={() => setIsOpenModal(false)} className="absolute top-4 right-2 w-10 rounded-full h-10 bg-blue-300 text-white grid place-content-center transition-all duration-500 hover:brightness-75 cursor-pointer">
                         <FaTimes />

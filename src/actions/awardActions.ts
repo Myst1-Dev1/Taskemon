@@ -9,7 +9,7 @@ export async function createAward(formData: FormData) {
     const userId = formData.get("userId") as string;
 
     try {
-        await fetch("http://localhost:4000/awards/createAward", {
+        await fetch("https://lab.mystdev.com.br/taskemon/awards/createAward", {
             method:"POST",
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export async function createAward(formData: FormData) {
 
 export async function deleteAward(id:string) {
     try {
-        await fetch("http://localhost:4000/awards/deleteAward/" + id, {
+        await fetch("https://lab.mystdev.com.br/taskemon/awards/deleteAward/" + id, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

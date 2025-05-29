@@ -1,8 +1,9 @@
 import { createTaskAction } from "@/actions/taskActions";
 import { Loading } from "@/components/loading";
 import { Modal } from "@/components/modal";
-import { Dispatch, SetStateAction, useState, useTransition } from "react";
+import { Dispatch, SetStateAction, useTransition } from "react";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface TaskModalProps {
     isOpenModal: boolean;
@@ -12,7 +13,6 @@ interface TaskModalProps {
 
 export function TaskModal({ isOpenModal, setIsOpenModal, user }:TaskModalProps) {
     const [isPending, startTransition] = useTransition();
-    const [message, setMessage] = useState("");
 
     const handleCreateTask = (formData: FormData) => {
         formData.append("userId", user._id);
@@ -20,8 +20,10 @@ export function TaskModal({ isOpenModal, setIsOpenModal, user }:TaskModalProps) 
         startTransition(async () => {
         try {
             await createTaskAction(formData);
+
+            toast.success('Tarefa criada com sucesso!');
         } catch (err) {
-            setMessage("Erro ao criar tarefa");
+            toast.error("Erro ao criar tarefa");
         } finally {
             setIsOpenModal(false);
         }
@@ -49,7 +51,6 @@ export function TaskModal({ isOpenModal, setIsOpenModal, user }:TaskModalProps) 
                         <button className="cursor-pointer bg-blue-500 text-white rounded-md w-full p-3 mt-5 transition-all duration-500 hover:brightness-90">
                             {isPending ? <Loading /> : "Enviar"}
                         </button>
-                        {message && <p>{message}</p>}
                     </form>
                     <span onClick={() => setIsOpenModal(false)} className="absolute top-4 right-2 w-10 rounded-full h-10 bg-blue-300 text-white grid place-content-center transition-all duration-500 hover:brightness-75 cursor-pointer">
                         <FaTimes />

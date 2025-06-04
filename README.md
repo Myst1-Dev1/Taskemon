@@ -3,7 +3,9 @@
 Este é um projeto desenvolvido com Next.js e suporte a PWA (Progressive Web App), com uma interface lúdica inspirada nos universos do Mario e Pokémon. A aplicação é voltada para o gerenciamento de tarefas entre pais e filhos, promovendo a organização e a motivação por meio de um sistema de pontos e recompensas.
 
 ---
+
 ⚠️ Observação: Este é um projeto pessoal, sem fins lucrativos. Todos os direitos de imagem pertencem à Nintendo.
+
 ---
 
 
@@ -16,6 +18,8 @@ Este é um projeto desenvolvido com Next.js e suporte a PWA (Progressive Web App
 -🎁 Resgate de recompensas criadas pelos pais com os pontos conquistados.
 
 -⏱️ Limite diário: tarefas e recompensas só podem ser marcadas/solicitadas uma vez por dia.
+
+---
 
 🛠️ Tecnologias e Bibliotecas Utilizadas
 
